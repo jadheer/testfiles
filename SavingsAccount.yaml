@@ -1,0 +1,190 @@
+openapi: 3.0.1
+info:
+  title: Savings Account
+  description: BIAN Service Domain Packaged Business Capability (PCB) | DDD Bounded Context Savings Account (expanded with ISO200022).
+  version: 11.0.0
+servers:
+- url: 'https://app.swaggerhub.com/apis/BIAN-3/SavingsAccount/11.0.0#/servers'
+paths:
+   /SavingsAccountFacility/Initiate:
+    post:
+      tags:
+          - SavingsAccountFacility
+      summary: InCR Initiate A new savings account
+      description: InCR Initiate A new savings account
+      operationId: Initiate
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateSavingsAccountFacilityRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/InitiateSavingsAccountFacilityResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    AccountType:
+      type: object
+      properties:
+        AccountType:
+          type: string
+          description: "\n"
+          format: string
+        AccountTypeName:
+          $ref: '#/components/schemas/AccountTypeName'
+    AccountTypeName:
+      type: object
+      properties:
+        Name:
+          type: string
+          description: "\n"
+          format: string
+    AccountCurrency:
+      type: object
+      properties:
+        AccountCurrencyType:
+          type: string
+          description: "\n"
+          format: string
+        CurrencyCode:
+          type: string
+          description: "\n"
+          format: string
+    SavingsAccountArrangement:
+          type: array
+          items:
+            type: object
+            properties:
+              ArrangementTypeValues:
+                type: string
+                description: "\n"
+                format: string
+              Amount:
+                type: string
+                description: "\n"
+                format: string
+    SavingsAccountFacility:
+      type: object
+      properties:
+        CustomerReference:
+          type: string
+          description: "\n"
+          format: string
+        BankBranchLocationReference:
+          type: string
+          description: "\n"
+          format: string
+        AccountType:
+          $ref: '#/components/schemas/AccountType'
+        AccountCurrency:
+          $ref: '#/components/schemas/AccountCurrency'
+        SavingsAccountArrangement:
+          $ref: '#/components/schemas/SavingsAccountArrangement'
+        Associations:
+          type: string
+          description: "\n"
+          format: string
+        AssociationType:
+          type: string
+          description: "\n"
+          format: string
+        AssociationObligationEntitlement:
+          type: string
+          description: "\n"
+          format: string
+        AssociationReference:
+          type: string
+          description: "\n"
+          format: string
+        AccountDetails:
+          type: string
+          description: "\n"
+          format: string
+        DateType:
+          type: string
+          description: "\n"
+          format: string
+    InitiateSavingsAccountFacilityRequest:
+      type: object
+      properties:
+        SavingsAccountFacility:
+          $ref: '#/components/schemas/SavingsAccountFacility'
+    InitiateSavingsAccountFacilityResponse:
+      type: object
+      properties:
+        SavingsAccountFacility:
+          $ref: '#/components/schemas/SavingsAccountFacility'
+    HTTPError:
+      type: object
+      properties:
+        Status_code:
+          type: string
+          description: "\n"
+          format: string
+        Status:
+          type: string
+          description: "\n"
+          format: string
+        Message:
+          type: string
+          description: "\n"
+          format: string
+  requestBodies:
+    InitiateSavingsAccountFacilityRequest:
+      description: CurrentAccountFacilityInitiate
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateSavingsAccountFacilityRequest'
+  responses:
+    InitiateSavingsAccountFacilityResponse:
+        description: fetchSavingsAccount
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/InitiateSavingsAccountFacilityResponse'
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'

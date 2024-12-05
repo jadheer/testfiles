@@ -1,0 +1,146 @@
+openapi: 3.0.1
+info:
+  title: Open Banking
+  description: This specification covers the APIs for the Equifax Open Banking Insights Product. .
+  version: 1.2.32
+servers:
+- url: "https://api.sandbox.equifax.co.uk/open-banking-insights/v1"
+paths:
+  /consumer/financialHealthIndex/months:
+    get:
+      tags:
+          - CONSUMER
+      summary: Financial Health Index (V2)
+      description: "Financial Health Index V2 is an improved version of the Financial\
+        \ Health Index V1 where all data can be returned in the output, e.g. 3, 6\
+        \ and 12 months of data." 
+      operationId: RetrieveFinancialHealthIndex(V2)
+      parameters:
+          - $ref: "#/components/parameters/CustomerIdParam"
+          - $ref: "#/components/parameters/NumberOfMonth1361224Param"
+          - $ref: "#/components/parameters/EfxClientCorrelationIdParam"
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveFinancialHealthIndexMonthsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    flags:
+      type: array
+      items:
+        type: object
+        properties:
+          flag:
+            type: string
+            description: "\n"
+            format: string
+          description:
+            type: string
+            description: "\n"
+            format: string
+          level:
+            type: string
+            description: "\n"
+            format: string
+    RetrieveFinancialHealthIndexMonthsResponse:
+      type: object
+      properties:
+        numberOfMonths:
+          type: integer
+          description: "\n"
+          format: integer
+        fhiScore:
+          type: integer
+          description: "\n"
+          format: integer
+        flags:
+          $ref: '#/components/schemas/flags'
+    HTTPError:
+      type: object
+      properties:
+        logref:
+          type: string
+          description: "\n"
+          format: string
+        message:
+          type: string
+          description: "\n"
+          format: string
+  parameters:
+    CustomerIdParam:
+      name: customerId
+      description: "Internal Id of the customer. This can be retrieved from the /general/lookup/customerId\
+        \ endpoint when providing an external client reference."
+      in: query
+      required: true
+      schema:
+        type: string
+    NumberOfMonth1361224Param:
+      name: numberOfMonth
+      description: "An array of integers, containing either 3, 6 or 12 months for\
+        \ transaction data to be provided in the response."
+      in: query
+      required: false
+      schema:
+        type: integer
+    EfxClientCorrelationIdParam:
+      name: efx-client-correlation-id
+      description: "This is a client reference ID, which is returned in the response.\
+        \ This can be used by clients for their own reference and logging purposes."
+      in: header
+      schema:
+        type: string
+  responses:
+    RetrieveFinancialHealthIndexMonthsResponse:
+      description: fetchFhiScore
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveFinancialHealthIndexMonthsResponse'
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'

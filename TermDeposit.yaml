@@ -1,0 +1,198 @@
+openapi: 3.0.1
+info:
+  title: Term Deposit
+  description: BIAN Service Domain Packaged Business Capability (PCB) | DDD Bounded Context Term Deposit (expanded with ISO200022).
+  version: 11.0.0
+servers:
+- url: 'https://app.swaggerhub.com/apis/BIAN-3/TermDeposit/11.0.0#/servers'
+paths:
+   /TermDepositFacility/Initiate:
+    post:
+      tags:
+          - TermDepositFacility
+      summary: InCR Initiate A new Term Deposit
+      description: InCR Initiate A new Term Deposit
+      operationId: Initiate
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateTermDepositFacilityRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/InitiateTermDepositFacilityResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    AccountType:
+      type: object
+      properties:
+        AccountType:
+          type: string
+          description: "\n"
+          format: string
+        AccountTypeName:
+          $ref: '#/components/schemas/AccountTypeName'
+    AccountTypeName:
+      type: object
+      properties:
+        Name:
+          type: string
+          description: "\n"
+          format: string
+    AccountNumber:
+          type: object
+          properties:
+            Account:
+              type: string
+              description: "\n"
+              format: string
+    AccountCurrency:
+      type: object
+      properties:
+        AccountCurrencyType:
+          type: string
+          description: "\n"
+          format: string
+        CurrencyCode:
+          type: string
+          description: "\n"
+          format: string
+    TermDepositArrangementItem:
+      type: object
+      properties:
+        ArrangementTypeValues:
+          type: string
+          description: "\n"
+          format: string
+        Value:
+          type: string
+          description: "\n"
+          format: string
+    TermDepositArrangement:
+      type: array
+      items:
+        $ref: '#/components/schemas/TermDepositArrangementItem'
+    TermDepositOpenDate:
+      type: object
+      properties:
+        DateTimeContent:
+          type: string
+          description: "\n"
+          format: string
+    TermDepositFacility:
+      type: object
+      properties:
+          CustomerReference:
+            type: string
+            description: "\n"
+            format: string
+          BankBranchLocationReference:
+            type: string
+            description: "\n"
+            format: string
+          AccountType:
+            $ref: '#/components/schemas/AccountType'
+          AccountCurrency:
+            $ref: '#/components/schemas/AccountCurrency'
+          TermDepositArrangement:
+            $ref: '#/components/schemas/TermDepositArrangement'
+          Associations:
+            type: string
+            description: "\n"
+            format: string
+          AssociationType:
+            type: string
+            description: "\n"
+            format: string
+          AssociationReference:
+            type: string
+            description: "\n"
+            format: string
+          AccountNumber:
+            $ref: '#/components/schemas/AccountNumber'
+          TermDepositOpenDate:
+            $ref: '#/components/schemas/TermDepositOpenDate'
+    InitiateTermDepositFacilityRequest:
+      type: object
+      properties:
+        TermDepositFacility:
+          $ref: '#/components/schemas/TermDepositFacility'
+    InitiateTermDepositFacilityResponse:
+      type: object
+      properties:
+        TermDepositFacility:
+          $ref: '#/components/schemas/TermDepositFacility'
+    HTTPError:
+      type: object
+      properties:
+        Status_code:
+          type: string
+          description: "\n"
+          format: string
+        Status:
+          type: string
+          description: "\n"
+          format: string
+        Message:
+          type: string
+          description: "\n"
+          format: string
+  requestBodies:
+    InitiateTermDepositFacilityRequest:
+      description: TermDepositFacilityInitiate
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateTermDepositFacilityRequest'
+  responses:
+    InitiateTermDepositFacilityResponse:
+        description: fetchTermDeposit
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/InitiateTermDepositFacilityResponse'
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'

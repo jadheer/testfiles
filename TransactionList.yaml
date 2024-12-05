@@ -1,0 +1,179 @@
+openapi: 3.0.1
+info:
+  title: Transaction List
+  description: BIAN Service Domain Packaged Business Capability (PCB) | DDD Bounded Context Transaction Listing.
+  version: 12.0.1
+servers:
+- url: ' https://virtserver.swaggerhub.com/BIAN-3/CurrentAccount/12.0.1'
+paths:
+   /currentaccount/{currentAccountId}/transactions/retrieve:
+    get:
+      tags:
+          - TransactionList
+      summary: InCR Retrieve list of transactions of current account
+      description: InCR Retrieve list of transactions of current account
+      operationId: Retrieve
+      parameters:
+        - $ref: '#/components/parameters/currentAccountId'
+        - $ref: '#/components/parameters/startDate'
+        - $ref: '#/components/parameters/endDate'
+      responses:
+        '200':
+          $ref: '#/components/responses/retrieveTransactionListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    transactionAmount:
+      type: object
+      properties:
+        amountValue:
+          type: string
+          description: "\n"
+          format: string
+    amountCurrency:
+      type: object
+      properties:
+        currencyCode:
+          type: string
+          description: "\n"
+          format: string
+    transactionDate:
+      type: object
+      properties:
+        dateContent:
+          type: string
+          description: "\n"
+          format: string
+    insertionDate:
+      type: object
+      properties:
+        dateContent:
+          type: string
+          description: "\n"
+          format: string
+    transactions:
+      type: array
+      items:
+        type: object
+        properties:
+              transactionAmount:
+                  $ref: '#/components/schemas/transactionAmount'
+              amountCurrency:
+                  $ref: '#/components/schemas/amountCurrency'
+              transactionDate:
+                  $ref: '#/components/schemas/transactionDate'
+              insertionDate:
+                  $ref: '#/components/schemas/insertionDate'
+    retrieveTransactionListResponse:
+      type: object
+      properties:
+        totalDeposit:
+            type: string
+            description: "\n"
+            format: string
+        totalWithdrawal:
+            type: string
+            description: "\n"
+            format: string
+        currentAccountId:
+            type: string
+            description: "\n"
+            format: string
+        startDate:
+            type: string
+            description: "\n"
+            format: string
+        endDate:
+            type: string
+            description: "\n"
+            format: string
+        transactions:
+           $ref: '#/components/schemas/transactions'
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          description: "\n"
+          format: string
+        status:
+          type: string
+          description: "\n"
+          format: string
+        message:
+          type: string
+          description: "\n"
+          format: string
+  parameters:
+    currentAccountId:
+      name: currentAccountId
+      in: path
+      required: true
+      schema:
+        type: string
+    startDate:
+      name: startDate
+      in: query
+      required: true
+      schema:
+        type: string
+    endDate:
+      name: endDate
+      in: query
+      required: true
+      schema:
+        type: string
+  responses:
+    retrieveTransactionListResponse:
+        description: fetchTransactionList
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/retrieveTransactionListResponse'
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'

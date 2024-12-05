@@ -1,0 +1,261 @@
+openapi: 3.0.1
+info:
+  title: Employee Management APIs
+  description: An API for managing employee data including their departments and roles. 
+  version: 1.0.0 
+servers:
+- url: 'https://example.com/api/employee'
+paths:
+  /employees/Initiate:
+    post:
+      tags:
+        - Employee
+      summary:  InCR Initiate a new Employee
+      description: InCR Initiate a new Employee
+      operationId: Initiate
+      requestBody:
+          $ref: '#/components/requestBodies/InitiateEmployeeRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/InitiateEmployeeResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /employee/{Id}/Retrieve:
+    get:
+      tags:
+        - Employee
+      summary:  InCR Retrieve Employee details
+      description: InCR Retrieve Employee details
+      operationId: Retrieve
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveEmployeeRequest'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /employee/all/Retrieve:
+    get:
+      tags:
+        - Employee
+      summary:  InCR Retrieve Employee details
+      description: InCR Retrieve Employee details
+      operationId: RetrieveAll
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveAllEmployeeResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /employee/{Id}/Update:
+    put:
+      tags:
+        - Employee
+      summary:  UpCR Update the Employee details
+      description: UpCR Update the Employee details
+      operationId: Update
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      requestBody:
+          $ref: '#/components/requestBodies/UpdateEmployeeRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/UpdateEmployeeResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    Employee:
+      type: object
+      properties:
+        Id:
+          type: integer
+          description: "\n"
+          format: integer
+        FirstName:
+          type: string
+          description: "\n"
+          format: string
+        LastName:
+          type: string
+          description: "\n"
+          format: string
+        Departments:
+            $ref: '#/components/schemas/Departments'
+        Roles:
+            $ref: '#/components/schemas/Roles'
+    Departments:
+      type: array
+      items:
+        type: object
+        properties:
+          Name:
+            type: string
+            description: "\n"
+            format: string
+          Location:
+            type: string
+            description: "\n"
+            format: string
+    Roles:
+      type: array
+      items:
+        type: object
+        properties:
+          Title:
+            type: string
+            description: "\n"
+            format: string
+          Responsibilities:
+            type: string
+            description: "\n"
+            format: string
+    InitiateEmployeeRequest:
+      $ref: '#/components/schemas/Employee'
+    InitiateEmployeeResponse:
+      $ref: '#/components/schemas/Employee'
+    RetrieveEmployeeRequest:
+      $ref: '#/components/schemas/Employee'
+    UpdateEmployeeRequest:
+      $ref: '#/components/schemas/Employee'
+    UpdateEmployeeResponse:
+      $ref: '#/components/schemas/Employee'
+    RetrieveAllEmployeeResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/Employee'
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          description: "\n"
+          format: string
+        status:
+          type: string
+          description: "\n"
+          format: string
+        message:
+          type: string
+          description: "\n"
+          format: string
+  parameters:
+    Id:
+      name: Id
+      in: path
+      required: true
+      schema:
+        type: string
+  requestBodies:
+    InitiateEmployeeRequest:
+        description: InitiateCardFinancialSettlement
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/InitiateEmployeeRequest' 
+    UpdateEmployeeRequest:
+        description: InitiateCardFinancialSettlement
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/UpdateEmployeeRequest'
+  responses:
+    InitiateEmployeeResponse:
+        description: InitiateCardFinancialSettlement
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/InitiateEmployeeResponse'
+    RetrieveEmployeeRequest:
+        description: InitiateCardFinancialSettlement
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/RetrieveEmployeeRequest'
+    RetrieveAllEmployeeResponse:
+        description: InitiateCardFinancialSettlement
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/RetrieveAllEmployeeResponse'
+    UpdateEmployeeResponse:
+        description: InitiateCardFinancialSettlement
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/UpdateEmployeeResponse'
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'

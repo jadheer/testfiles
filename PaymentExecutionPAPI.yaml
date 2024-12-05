@@ -1,0 +1,194 @@
+openapi: 3.0.1
+info:
+  title: Payment Execution - SAPI
+  description: BIAN Service Domain Packaged Business Capability (PCB) | DDD Bounded Context Payment Execution-SAPI.
+  version: 12.0.1
+servers:
+- url: 'https://core-api.partner-integrations-sandbox.thirsty-fish-dephub.tmachine.io'
+paths:
+  /v1/posting-instruction-batches:asyncCreate:
+    post:
+      tags:
+        - Payment Execution SAPI
+      summary:  InCR Initiate Payment Execution-SAPI
+      description: InCR Initiate Payment Execution-SAPI
+      operationId: Initiate
+      requestBody:
+          $ref: '#/components/requestBodies/InitiatePaymentExecutionRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/InitiatePaymentExecutionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    debtor_target_account:
+      type: object
+      properties:
+        account_id:
+          type: string
+          description: "\n"
+          format: string
+    creditor_target_account:
+      type: object
+      properties:
+        account_id:
+          type: string
+          description: "\n"
+          format: string
+    transfer:
+          type: object
+          properties:
+            amount:
+              type: string
+              description: "\n"
+              format: string
+            denomination:
+              type: string
+              description: "\n"
+              format: string
+            debtor_target_account:
+                $ref: '#/components/schemas/debtor_target_account'
+            creditor_target_account:
+                $ref: '#/components/schemas/creditor_target_account'
+    posting_instructions:
+      type: array
+      items:
+        type: object
+        properties:
+          client_transaction_id:
+            type: string
+            description: "\n"
+            format: string
+          transfer:
+            $ref: '#/components/schemas/transfer'
+    posting_instruction_batch:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: "\n"
+          format: string
+        client_batch_id:
+          type: string
+          description: "\n"
+          format: string
+        posting_instructions:
+            $ref: '#/components/schemas/posting_instructions'
+        batch_details:
+            type: string
+            description: "\n"
+            format: string
+            enum:
+              - null
+        value_timestamp:
+          type: string
+          description: "\n"
+          format: string
+    InitiatePaymentExecutionRequest:
+      type: object
+      properties: 
+        request_id:
+          type: string
+          description: "\n"
+          format: string
+        posting_instruction_batch:
+          $ref: '#/components/schemas/posting_instruction_batch'
+    InitiatePaymentExecutionResponse:
+      type: object
+      properties:
+            id:
+              type: string
+              description: "\n"
+              format: string
+            metadata:
+              type: string
+              description: "\n"
+              format: string
+            create_timestamp:
+              type: string
+              description: "\n"
+              format: string
+            done_timestamp:
+              type: string
+              description: "\n"
+              format: string
+            done:
+              type: string
+              description: "\n"
+              format: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          description: "\n"
+          format: string
+        status:
+          type: string
+          description: "\n"
+          format: string
+        message:
+          type: string
+          description: "\n"
+          format: string
+  requestBodies:
+    InitiatePaymentExecutionRequest:
+        description: InitiateCardFinancialSettlement
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/InitiatePaymentExecutionRequest'
+  responses:
+    InitiatePaymentExecutionResponse:
+        description: InitiateCardFinancialSettlement
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/InitiatePaymentExecutionResponse'
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'

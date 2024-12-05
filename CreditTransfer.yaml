@@ -1,0 +1,932 @@
+openapi: 3.0.1
+info:
+  title: ISO20022-Credit Transfer
+  description: ISO-20022 service debtor bank sends message to creditor bank to transfer funds from one account to another.
+  version: pacs.008.001.11
+servers:
+- url: 'https://www.iso20022.org/iso-20022-message-definitions?search=pacs.008'
+paths:
+  /creditTransfer/Initiate:
+    post:
+      tags:
+        - Credit Transfer
+      summary:  InCR Initiate credit transfer processing
+      description: InCR Initiate credit transfer processing
+      operationId: Initiate
+      requestBody:
+          $ref: '#/components/requestBodies/InitiateCreditTransferRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/InitiateCreditTransferResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /creditTransfer/{CdtTrfTxnId}/Retrieve:
+    get:
+      tags:
+        - Credit Transfer
+      summary:  InCR Retrieve credit transfer details
+      description: InCR Retrieve credit transfer details
+      operationId: Retrieve
+      parameters:
+        - $ref: '#/components/parameters/CdtTrfTxnId'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveCreditTransferResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /creditTransfer/{CdtTrfTxnId}/Update:
+    put:
+      tags:
+        - Credit Transfer
+      summary:  UpCR Update the credit transfer details
+      description: UpCR Update the credit transfer details
+      operationId: Update
+      parameters:
+        - $ref: '#/components/parameters/CdtTrfTxnId'
+      requestBody:
+          $ref: '#/components/requestBodies/UpdateCreditTransferRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/UpdateCreditTransferResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+x-comments: 'Schema below is an exact representation of pacs.008.001.11 xml message in a JSON format.'
+components:
+  schemas:
+    FIToFICstmrCdtTrf:
+      type: object
+      properties:
+        GrpHdr:
+          type: object
+          properties:
+            CreDtTm:
+              type: string
+              description: "\n"
+              format: string
+            SttlmInf:
+              type: object
+              properties:
+                SttlmMtd:
+                  type: string
+                  description: "\n"
+                  format: string
+            NbOfTxs:
+              type: string
+              description: "\n"
+              format: string
+            MsgId:
+              type: string
+              description: "\n"
+              format: string
+        CdtTrfTxInf:
+          type: array
+          items:
+            type: object
+            properties:
+              Cdtr:
+                type: string
+                description: "\n"
+                format: string
+              CdtrAgt:
+                type: object
+                properties:
+                  FinInstnId:
+                    type: string
+                    description: "\n"
+                    format: string
+              IntrBkSttlmAmt:
+                type: object
+                properties:
+                  Ccy:
+                    type: string
+                    description: "\n"
+                    format: string
+                  content:
+                    type: string
+                    description: "\n"
+                    format: string
+              PmtId:
+                type: object
+                properties:
+                  EndToEndId:
+                    type: string
+                    description: "\n"
+                    format: string
+              DbtrAgt:
+                type: object
+                properties:
+                  FinInstnId:
+                    type: string
+                    description: "\n"
+                    format: string
+              ChrgBr:
+                type: string
+                description: "\n"
+                format: string
+              Dbtr:
+                type: string
+                description: "\n"
+                format: string
+        SplmtryData:
+          type: array
+          items:
+            type: object
+            properties:
+              Envlp:
+                type: string
+                description: "\n"
+                format: string
+    GrpHdr:
+        type: object
+        properties:
+          CreDtTm:
+            type: string
+            description: "\n"
+            format: string
+          SttlmInf:
+            type: object
+            properties:
+              SttlmMtd:
+                type: string
+                description: "\n"
+                format: string
+          NbOfTxs:
+              type: string
+              description: "\n"
+              format: string
+          MsgId:
+              type: string
+              description: "\n"
+              format: string
+    SttlmInf:
+        type: object
+        properties:
+          SttlmInf:
+            type: string
+            description: "\n"
+            format: string
+    CdtrAgt:
+        type: object
+        properties:
+          FinInstnId:
+            type: string
+            description: "\n"
+            format: string                 
+    IntrBkSttlmAmt:
+        type: object
+        properties:
+          Ccy:
+            type: string
+            description: "\n"
+            format: string
+          content:
+            type: string
+            description: "\n"
+            format: string
+    PmtId:
+        type: object
+        properties:
+          EndToEndId:
+            type: string
+            description: "\n"
+            format: string
+    DbtrAgt:
+        type: object
+        properties:
+          FinInstnId:
+            type: string
+            description: "\n"
+            format: string
+    CdtTrfTxInf:
+        type: array
+        items:
+          type: object
+          properties:
+            Cdtr:
+              type: string
+              description: "\n"
+              format: string
+            CdtrAgt:
+              type: object
+              properties:
+                FinInstnId:
+                  type: string
+                  description: "\n"
+                  format: string
+            IntrBkSttlmAmt:
+              type: object
+              properties:
+                Ccy:
+                  type: string
+                  description: "\n"
+                  format: string
+                content:
+                  type: string
+                  description: "\n"
+                  format: string
+            PmtId:
+              type: object
+              properties:
+                EndToEndId:
+                  type: string
+                  description: "\n"
+                  format: string
+            DbtrAgt:
+              type: object
+              properties:
+                FinInstnId:
+                  type: string
+                  description: "\n"
+                  format: string
+            ChrgBr:
+              type: string
+              description: "\n"
+              format: string
+            Dbtr:
+              type: string
+              description: "\n"
+              format: string
+    SplmtryData:
+      type: array
+      items:
+        type: object
+        properties:
+          Envlp:
+            type: string
+            description: "\n"
+            format: string
+    Document:
+          type: object
+          properties:
+            CdtTrfTxnId:
+              type: string
+              description: "\n"
+              format: string
+            FIToFICstmrCdtTrf:
+              type: object
+              properties:
+                GrpHdr:
+                  type: object
+                  properties:
+                    CreDtTm:
+                      type: string
+                      description: "\n"
+                      format: string
+                    SttlmInf:
+                      type: object
+                      properties:
+                        SttlmMtd:
+                          type: string
+                          description: "\n"
+                          format: string
+                    NbOfTxs:
+                      type: string
+                      description: "\n"
+                      format: string
+                    MsgId:
+                      type: string
+                      description: "\n"
+                      format: string
+                CdtTrfTxInf:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      Cdtr:
+                        type: string
+                        description: "\n"
+                        format: string
+                      CdtrAgt:
+                        type: object
+                        properties:
+                          FinInstnId:
+                            type: string
+                            description: "\n"
+                            format: string
+                      IntrBkSttlmAmt:
+                        type: object
+                        properties:
+                          Ccy:
+                            type: string
+                            description: "\n"
+                            format: string
+                          content:
+                            type: string
+                            description: "\n"
+                            format: string
+                      PmtId:
+                        type: object
+                        properties:
+                          EndToEndId:
+                            type: string
+                            description: "\n"
+                            format: string
+                      DbtrAgt:
+                        type: object
+                        properties:
+                          FinInstnId:
+                            type: string
+                            description: "\n"
+                            format: string
+                      ChrgBr:
+                        type: string
+                        description: "\n"
+                        format: string
+                      Dbtr:
+                        type: string
+                        description: "\n"
+                        format: string
+                SplmtryData:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      Envlp:
+                        type: string
+                        description: "\n"
+                        format: string
+    InitiateCreditTransferRequest:
+      type: object
+      properties:
+        Document:
+          type: object
+          properties:
+            CdtTrfTxnId:
+              type: string
+              description: "\n"
+              format: string
+            FIToFICstmrCdtTrf:
+              type: object
+              properties:
+                GrpHdr:
+                  type: object
+                  properties:
+                    CreDtTm:
+                      type: string
+                      description: "\n"
+                      format: string
+                    SttlmInf:
+                      type: object
+                      properties:
+                        SttlmMtd:
+                          type: string
+                          description: "\n"
+                          format: string
+                    NbOfTxs:
+                      type: string
+                      description: "\n"
+                      format: string
+                    MsgId:
+                      type: string
+                      description: "\n"
+                      format: string
+                CdtTrfTxInf:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      Cdtr:
+                        type: string
+                        description: "\n"
+                        format: string
+                      CdtrAgt:
+                        type: object
+                        properties:
+                          FinInstnId:
+                            type: string
+                            description: "\n"
+                            format: string
+                      IntrBkSttlmAmt:
+                        type: object
+                        properties:
+                          Ccy:
+                            type: string
+                            description: "\n"
+                            format: string
+                          content:
+                            type: string
+                            description: "\n"
+                            format: string
+                      PmtId:
+                        type: object
+                        properties:
+                          EndToEndId:
+                            type: string
+                            description: "\n"
+                            format: string
+                      DbtrAgt:
+                        type: object
+                        properties:
+                          FinInstnId:
+                            type: string
+                            description: "\n"
+                            format: string
+                      ChrgBr:
+                        type: string
+                        description: "\n"
+                        format: string
+                      Dbtr:
+                        type: string
+                        description: "\n"
+                        format: string
+                SplmtryData:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      Envlp:
+                        type: string
+                        description: "\n"
+                        format: string
+    InitiateCreditTransferResponse:
+      type: object
+      properties:
+        Document:
+          type: object
+          properties:
+            CdtTrfTxnId:
+              type: string
+              description: "\n"
+              format: string
+            FIToFICstmrCdtTrf:
+              type: object
+              properties:
+                GrpHdr:
+                  type: object
+                  properties:
+                    CreDtTm:
+                      type: string
+                      description: "\n"
+                      format: string
+                    SttlmInf:
+                      type: object
+                      properties:
+                        SttlmMtd:
+                          type: string
+                          description: "\n"
+                          format: string
+                    NbOfTxs:
+                      type: string
+                      description: "\n"
+                      format: string
+                    MsgId:
+                      type: string
+                      description: "\n"
+                      format: string
+                CdtTrfTxInf:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      Cdtr:
+                        type: string
+                        description: "\n"
+                        format: string
+                      CdtrAgt:
+                        type: object
+                        properties:
+                          FinInstnId:
+                            type: string
+                            description: "\n"
+                            format: string
+                      IntrBkSttlmAmt:
+                        type: object
+                        properties:
+                          Ccy:
+                            type: string
+                            description: "\n"
+                            format: string
+                          content:
+                            type: string
+                            description: "\n"
+                            format: string
+                      PmtId:
+                        type: object
+                        properties:
+                          EndToEndId:
+                            type: string
+                            description: "\n"
+                            format: string
+                      DbtrAgt:
+                        type: object
+                        properties:
+                          FinInstnId:
+                            type: string
+                            description: "\n"
+                            format: string
+                      ChrgBr:
+                        type: string
+                        description: "\n"
+                        format: string
+                      Dbtr:
+                        type: string
+                        description: "\n"
+                        format: string
+                SplmtryData:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      Envlp:
+                        type: string
+                        description: "\n"
+                        format: string
+    RetrieveCreditTransferResponse:
+      type: object
+      properties:
+        Document:
+          type: object
+          properties:
+            CdtTrfTxnId:
+              type: string
+              description: "\n"
+              format: string
+            FIToFICstmrCdtTrf:
+              type: object
+              properties:
+                GrpHdr:
+                  type: object
+                  properties:
+                    CreDtTm:
+                      type: string
+                      description: "\n"
+                      format: string
+                    SttlmInf:
+                      type: object
+                      properties:
+                        SttlmMtd:
+                          type: string
+                          description: "\n"
+                          format: string
+                    NbOfTxs:
+                      type: string
+                      description: "\n"
+                      format: string
+                    MsgId:
+                      type: string
+                      description: "\n"
+                      format: string
+                CdtTrfTxInf:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      Cdtr:
+                        type: string
+                        description: "\n"
+                        format: string
+                      CdtrAgt:
+                        type: object
+                        properties:
+                          FinInstnId:
+                            type: string
+                            description: "\n"
+                            format: string
+                      IntrBkSttlmAmt:
+                        type: object
+                        properties:
+                          Ccy:
+                            type: string
+                            description: "\n"
+                            format: string
+                          content:
+                            type: string
+                            description: "\n"
+                            format: string
+                      PmtId:
+                        type: object
+                        properties:
+                          EndToEndId:
+                            type: string
+                            description: "\n"
+                            format: string
+                      DbtrAgt:
+                        type: object
+                        properties:
+                          FinInstnId:
+                            type: string
+                            description: "\n"
+                            format: string
+                      ChrgBr:
+                        type: string
+                        description: "\n"
+                        format: string
+                      Dbtr:
+                        type: string
+                        description: "\n"
+                        format: string
+                SplmtryData:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      Envlp:
+                        type: string
+                        description: "\n"
+                        format: string
+    UpdateCreditTransferRequest:
+      type: object
+      properties:
+        Document:
+          type: object
+          properties:
+            CdtTrfTxnId:
+              type: string
+              description: "\n"
+              format: string
+            FIToFICstmrCdtTrf:
+              type: object
+              properties:
+                GrpHdr:
+                  type: object
+                  properties:
+                    CreDtTm:
+                      type: string
+                      description: "\n"
+                      format: string
+                    SttlmInf:
+                      type: object
+                      properties:
+                        SttlmMtd:
+                          type: string
+                          description: "\n"
+                          format: string
+                    NbOfTxs:
+                      type: string
+                      description: "\n"
+                      format: string
+                    MsgId:
+                      type: string
+                      description: "\n"
+                      format: string
+                CdtTrfTxInf:
+                  type: array
+                  items:  
+                    type: object
+                    properties:
+                      Cdtr:
+                        type: string
+                        description: "\n"
+                        format: string
+                      CdtrAgt:
+                        type: object
+                        properties:
+                          FinInstnId:
+                            type: string
+                            description: "\n"
+                            format: string
+                      IntrBkSttlmAmt:
+                        type: object
+                        properties:
+                          Ccy:
+                            type: string
+                            description: "\n"
+                            format: string
+                          content:
+                            type: string
+                            description: "\n"
+                            format: string
+                      PmtId:
+                        type: object
+                        properties:
+                          EndToEndId:
+                            type: string
+                            description: "\n"
+                            format: string
+                      DbtrAgt:
+                        type: object
+                        properties:
+                          FinInstnId:
+                            type: string
+                            description: "\n"
+                            format: string
+                      ChrgBr:
+                        type: string
+                        description: "\n"
+                        format: string
+                      Dbtr:
+                        type: string
+                        description: "\n"
+                        format: string
+                SplmtryData:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      Envlp:
+                        type: string
+                        description: "\n"
+                        format: string
+    UpdateCreditTransferResponse:
+      type: object
+      properties:
+        Document:
+          type: object
+          properties:
+            CdtTrfTxnId:
+              type: string
+              description: "\n"
+              format: string
+            FIToFICstmrCdtTrf:
+              type: object
+              properties:
+                GrpHdr:
+                  type: object
+                  properties:
+                    CreDtTm:
+                      type: string
+                      description: "\n"
+                      format: string
+                    SttlmInf:
+                      type: object
+                      properties:
+                        SttlmMtd:
+                          type: string
+                          description: "\n"
+                          format: string
+                    NbOfTxs:
+                      type: string
+                      description: "\n"
+                      format: string
+                    MsgId:
+                      type: string
+                      description: "\n"
+                      format: string
+                CdtTrfTxInf:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      Cdtr:
+                        type: string
+                        description: "\n"
+                        format: string
+                      CdtrAgt:
+                        type: object
+                        properties:
+                          FinInstnId:
+                            type: string
+                            description: "\n"
+                            format: string
+                      IntrBkSttlmAmt:
+                        type: object
+                        properties:
+                          Ccy:
+                            type: string
+                            description: "\n"
+                            format: string
+                          content:
+                            type: string
+                            description: "\n"
+                            format: string
+                      PmtId:
+                        type: object
+                        properties:
+                          EndToEndId:
+                            type: string
+                            description: "\n"
+                            format: string
+                      DbtrAgt:
+                        type: object
+                        properties:
+                          FinInstnId:
+                            type: string
+                            description: "\n"
+                            format: string
+                      ChrgBr:
+                        type: string
+                        description: "\n"
+                        format: string
+                      Dbtr:
+                        type: string
+                        description: "\n"
+                        format: string
+                SplmtryData:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      Envlp:
+                        type: string
+                        description: "\n"
+                        format: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          description: "\n"
+          format: string
+        status:
+          type: string
+          description: "\n"
+          format: string
+        message:
+          type: string
+          description: "\n"
+          format: string
+  parameters:
+    CdtTrfTxnId:
+      name: CdtTrfTxnId
+      in: path
+      required: true
+      schema:
+        type: string
+  requestBodies:
+    InitiateCreditTransferRequest:
+        description: InitiateCardFinancialSettlement
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/InitiateCreditTransferRequest' 
+    UpdateCreditTransferRequest:
+        description: InitiateCardFinancialSettlement
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/UpdateCreditTransferRequest'
+  responses:
+    InitiateCreditTransferResponse:
+        description: InitiateCardFinancialSettlement
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/InitiateCreditTransferResponse'
+    RetrieveCreditTransferResponse:
+        description: InitiateCardFinancialSettlement
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/RetrieveCreditTransferResponse'
+    UpdateCreditTransferResponse:
+        description: InitiateCardFinancialSettlement
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/UpdateCreditTransferResponse'
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'

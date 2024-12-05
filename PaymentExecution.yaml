@@ -1,0 +1,178 @@
+openapi: 3.0.1
+info:
+  title: Payment Execution
+  description: BIAN Service Domain Packaged Business Capability (PCB) | DDD Bounded Context Payment Execution.
+  version: 12.0.1
+servers:
+- url: 'https://app.swaggerhub.com/apis/BIAN-3/PaymentExecution/11.0.0'
+paths:
+  /PaymentExecution/Initiate:
+    post:
+      tags:
+        - Payment Execution
+      summary:  InCR Initiate Payment Execution
+      description: InCR Initiate Payment Execution
+      operationId: Initiate
+      requestBody:
+          $ref: '#/components/requestBodies/InitiatePaymentExecutionRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/InitiatePaymentExecutionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    PaymentExecutionProcedure:
+          type: object
+          properties:
+            PaymentTransactionInitiatorReference:
+              type: string
+              description: "\n"
+              format: string
+            PaymentOrderReference:
+              type: string
+              description: "\n"
+              format: string
+            PayerReference:
+              type: string
+              description: "\n"
+              format: string
+            PayerBankReference:
+              type: string
+              description: "\n"
+              format: string
+            PayerProductInstanceReference:
+              type: string
+              description: "\n"
+              format: string
+            PayeeReference:
+              type: string
+              description: "\n"
+              format: string
+            PayeeBankReference:
+              type: string
+              description: "\n"
+              format: string
+            PayeeProductInstanceReference:
+              type: string
+              description: "\n"
+              format: string
+            Amount:
+              type: string
+              description: "\n"
+              format: string
+            Currency:
+              type: string
+              description: "\n"
+              format: string
+            DateType:
+              type: string
+              description: "\n"
+              format: string
+            PaymentNote:
+              type: string
+              description: "\n"
+              format: string
+            WashAccountReference:
+              type: string
+              description: "\n"
+              format: string
+            IntermediaryAccountReference:
+              type: string
+              description: "\n"
+              format: string
+            PaymentMechanismType:
+              type: string
+              description: "\n"
+              format: string
+    InitiatePaymentExecutionRequest:
+      type: object
+      properties:
+        PaymentExecutionProcedure:
+          $ref: '#/components/schemas/PaymentExecutionProcedure'
+    InitiatePaymentExecutionResponse:
+      type: object
+      properties:
+        status:
+          type: boolean
+          description: "\n"
+          format: string
+        message:
+          type: string
+          description: "\n"
+          format: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          description: "\n"
+          format: string
+        status:
+          type: string
+          description: "\n"
+          format: string
+        message:
+          type: string
+          description: "\n"
+          format: string
+  requestBodies:
+    InitiatePaymentExecutionRequest:
+        description: InitiateCardFinancialSettlement
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/InitiatePaymentExecutionRequest' 
+  responses:
+    InitiatePaymentExecutionResponse:
+        description: InitiateCardFinancialSettlement
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/InitiatePaymentExecutionResponse'
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
